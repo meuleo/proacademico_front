@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Teste JsStore com API</title>
+</head>
+<body>
+
+  <h2>Ver no console</h2>
+
+  <!-- Scripts do JsStore local -->
+  <script src="./jsStore.js"></script>
+  <script src="./jsStore.api.js"></script>
+  <script src="./db.config.js"></script>
+  <script>
+
+    // Inicializa Worker diretamente no HTML
+    const worker = new Worker("./jsWorker.js");
+    const connection = new JsStore.Connection(worker);
+
+    // Instância da API
+    const api = new Api(connection);
+
+    // Teste de uso
+    (async () => {
+      await api.initDb(schema);
+      // await api.inserir("Turma", { nome: "1ª Turma", classe: "10ª", });
+      const resultado = await api.listar("Turma");
+      // await api.remover("Turma", 7);
+      console.log("Turmas:", resultado);
+
+      // Só trabalha offline se iniciar sessão
+    })();
+
+  </script>
+</body>
+</html>
